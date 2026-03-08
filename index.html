@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="no">
+<html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TG-share</title>
@@ -10,20 +10,17 @@
 
 <h1>TG-share</h1>
 
-<input id="username" placeholder="Profil navn">
+<input id="username" placeholder="username">
 
-<br><br>
+<input type="file" id="file">
 
-<input type="file" id="fileInput">
+<button onclick="upload()">Upload</button>
 
-<br><br>
-
-<button onclick="shareFile()">⬆ Upload & Share</button>
-
-<hr>
+<h2>Feed</h2>
 
 <div id="feed"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="script.js"></script>
 
 </body>
