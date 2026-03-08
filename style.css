@@ -3,27 +3,26 @@ background:#0f0f0f;
 color:white;
 font-family:sans-serif;
 text-align:center;
-margin:0;
 }
 
 input{
 padding:8px;
-margin:8px;
+margin:5px;
 }
 
 button{
-padding:10px 18px;
-border:none;
-border-radius:8px;
+padding:10px 16px;
 background:#007bff;
+border:none;
+border-radius:6px;
 color:white;
 cursor:pointer;
 }
 
 .card{
 background:#1c1c1c;
+padding:15px;
 margin:20px auto;
-padding:16px;
-border-radius:14px;
-max-width:420px;
+max-width:400px;
+border-radius:12px;
 }
