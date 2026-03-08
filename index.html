@@ -4,18 +4,92 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>TG-share ULTRA</title>
+<title>TG-share</title>
 
-<link rel="stylesheet" href="style.css">
+<style>
+
+body{
+ background:#0f0f0f;
+ color:white;
+ font-family:sans-serif;
+ text-align:center;
+ margin:0;
+}
+
+button{
+ padding:10px 16px;
+ margin:6px;
+ border:none;
+ border-radius:8px;
+ background:#007bff;
+ color:white;
+ cursor:pointer;
+}
+
+.feed-card{
+ background:#1c1c1c;
+ margin:20px auto;
+ padding:15px;
+ border-radius:14px;
+ max-width:450px;
+}
+
+input{
+ padding:8px;
+ margin:8px;
+ width:80%;
+}
+
+</style>
 </head>
 
 <body>
 
-<h1>🔥 TG-share ULTRA</h1>
+<h1>TG-share</h1>
+
+<input type="file" id="uploadFile">
+<br>
+
+<input type="text" id="uploaderName" placeholder="Ditt navn">
+
+<br>
+
+<button onclick="uploadDemo()">⬆ Upload</button>
 
 <div id="feed"></div>
 
-<script src="script.js"></script>
+<script>
+
+const feed = document.getElementById("feed");
+
+function uploadDemo(){
+
+const fileInput = document.getElementById("uploadFile");
+const nameInput = document.getElementById("uploaderName");
+
+if(!fileInput.files[0]) return;
+
+const fileName = fileInput.files[0].name;
+const uploader = nameInput.value || "Anonymous";
+
+/*
+⚠️ Dette er demo frontend.
+Ekte upload må kobles til backend server senere.
+*/
+
+feed.innerHTML = `
+<div class="feed-card">
+<p>📁 ${fileName}</p>
+<p>👤 Uploaded by: ${uploader}</p>
+
+<button>⬇ Download</button>
+<button>🚩 Report</button>
+</div>
+` + feed.innerHTML;
+
+}
+
+</script>
 
 </body>
 </html>
