@@ -1,31 +1,32 @@
-const supabase = window.supabase.createClient(
-"https://grmuakqenogqjycfhxjy.supabase.co",
-"sb_publishable_Xn2n0aNdbaIyE3_HCyA2Tw_7hdHHwIZ"
-)
+const PROJECT_URL = "https://grmuakqenogqjycfhxjy.supabase.co"
+const PUBLIC_KEY = "sb_publishable_Xn2n0aNdbaIyE3_HCyA2Tw_7hdHHwIZ"
+
+const supabase = window.supabase.createClient(PROJECT_URL, PUBLIC_KEY)
+
+const feed = document.getElementById("feed")
 
 async function upload(){
 
-let username=document.getElementById("username").value
-let file=document.getElementById("file").files[0]
+const username = document.getElementById("username").value
+const file = document.getElementById("file").files[0]
 
 if(!username || !file){
-alert("Missing username or file")
+alert("Velg navn og fil")
 return
 }
 
-let path=Date.now()+"_"+file.name
+const path = Date.now()+"_"+file.name
 
 await supabase.storage.from("files").upload(path,file)
 
-let {data}=supabase.storage.from("files").getPublicUrl(path)
-
-let url=data.publicUrl
+const { data } = supabase.storage.from("files").getPublicUrl(path)
+const url = data.publicUrl
 
 await supabase.from("files").insert([
 {
-username:username,
-filename:file.name,
-fileurl:url
+username: username,
+filename: file.name,
+fileurl: url
 }
 ])
 
@@ -35,26 +36,39 @@ loadFeed()
 
 async function loadFeed(){
 
-let {data}=await supabase
+const { data } = await supabase
 .from("files")
 .select("*")
 .order("created_at",{ascending:false})
 
-let feed=document.getElementById("feed")
 feed.innerHTML=""
 
 data.forEach(file=>{
 
-feed.innerHTML+=`
+let preview=""
+
+if(file.fileurl.match(/\.(jpg|png|gif|webp)$/i)){
+preview=`<img src="${file.fileurl}" style="max-width:100%">`
+}
+else if(file.fileurl.match(/\.(mp4|webm)$/i)){
+preview=`<video controls style="max-width:100%">
+<source src="${file.fileurl}">
+</video>`
+}
+else{
+preview="📁 File"
+}
+
+feed.innerHTML += `
 <div class="card">
-<p>👤 ${file.username}</p>
-<p>📁 ${file.filename}</p>
-<a href="${file.fileurl}" target="_blank">Watch</a>
+<h3>${file.username}</h3>
+${preview}
+<p>${file.filename}</p>
+<a href="${file.fileurl}" target="_blank">👀 Watch</a>
 <br>
-<a href="${file.fileurl}" download>Download</a>
+<a href="${file.fileurl}" download>⬇ Download</a>
 </div>
 `
-
 })
 
 }
